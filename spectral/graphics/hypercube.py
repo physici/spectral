@@ -113,13 +113,13 @@ class MouseHandler:
         self.middle = UP
 
     def left_down(self, event):
-        self.event_position = (event.X, event.Y)
-        self.position = (event.X, event.Y)
+        self.event_position = (event.GetX(), event.GetY())
+        self.position = (event.GetX(), event.GetY())
         self.left = DOWN
         event.Skip()
 
     def left_up(self, event):
-        self.position = (event.X, event.Y)
+        self.position = (event.GetX(), event.GetY())
         self.left = UP
         event.Skip()
 
@@ -128,10 +128,10 @@ class MouseHandler:
         import numpy as np
         if DOWN not in (self.left, self.right):
             return
-        #print 'Mouse movement:', x, y
+        #print ('Mouse movement:', x, y)
         (w, h) = self.window.size
-        dx = event.X - self.position[0]
-        dy = event.Y - self.position[1]
+        dx = event.GetX() - self.position[0]
+        dy = event.GetY() - self.position[1]
         if self.left == DOWN:
             if wx.GetKeyState(wx.WXK_CONTROL):
                 # Mouse movement zooms in/out relative to target position
@@ -156,7 +156,7 @@ class MouseHandler:
                 rtp = self.window.camera_pos_rtp
                 rtp[1] = min(max(rtp[1] - yangle, 0.05), 179.95)
                 self.window.camera_pos_rtp[2] -= xangle
-        self.position = (event.X, event.Y)
+        self.position = (event.GetX(), event.GetY())
         self.window.Refresh()
         event.Skip()
 
