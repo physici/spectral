@@ -81,7 +81,7 @@ class MouseHandler:
         self.mode = 'DEFAULT'
 
     def left_down(self, event):
-        self.position = (event.X, event.Y)
+        self.position = (event.GetX(), event.GetY())
         self.left = DOWN
         if self.mode == 'DEFAULT':
             if wx.GetKeyState(wx.WXK_CONTROL) and wx.GetKeyState(wx.WXK_SHIFT):
@@ -99,11 +99,11 @@ class MouseHandler:
             elif wx.GetKeyState(wx.WXK_CONTROL):
                 # Switch to zoom mode.
                 self.mode = 'ZOOMING'
-        self.event_position = (event.X, event.Y)
+        self.event_position = (event.GetX(), event.GetY())
         event.Skip()
 
     def left_up(self, event):
-        self.position = (event.X, event.Y)
+        self.position = (event.GetX(), event.GetY())
         self.left = UP
         if self.mode == 'BOX_SELECT':
             self.update_box_coordinates()
@@ -119,7 +119,7 @@ class MouseHandler:
             self.window.canvas.Refresh()
         elif self.mode == 'ZOOMING':
             self.mode = 'DEFAULT'
-        self.event_position = (event.X, event.Y)
+        self.event_position = (event.GetX(), event.GetY())
         event.Skip()
 
     def motion(self, event):
@@ -129,8 +129,8 @@ class MouseHandler:
             return
         #print 'Mouse movement:', x, y
         (w, h) = self.window.size
-        dx = event.X - self.position[0]
-        dy = event.Y - self.position[1]
+        dx = event.GetX() - self.position[0]
+        dy = event.GetY() - self.position[1]
         if self.mode == 'DEFAULT':
             if self.left == DOWN and not self.window.mouse_panning:
                 # Mouse movement creates a rotation about the target position
@@ -157,7 +157,7 @@ class MouseHandler:
                 self.window.camera_pos_rtp[0] *= (float(w - dx) / w)
         elif self.mode == 'BOX_SELECT':
             self.update_box_coordinates()
-        self.position = (event.X, event.Y)
+        self.position = (event.GetX(), event.GetY())
         self.window.Refresh()
         event.Skip()
 
