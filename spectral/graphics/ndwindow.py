@@ -90,7 +90,7 @@ class MouseHandler:
                 cmd = lambda: self.window.get_pixel_info(
                     x, self.window.size[1] - y)
                 self.window.add_display_command(cmd)
-                self.window.canvas.SetCurrent(self.canvas.context)
+                self.window.canvas.SetCurrent(self.window.canvas.context)
                 self.window.canvas.Refresh()
             elif wx.GetKeyState(wx.WXK_SHIFT):
                 # Switch to box selection mode.
